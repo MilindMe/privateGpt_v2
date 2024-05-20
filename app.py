@@ -1,25 +1,33 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, Response, jsonify
 from flask_cors import CORS
-import time
-from query_data import query_rag  # Ensure query_data.py is in the same directory or adjust the import accordingly
+from query_data import query_rag
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/query', methods=['POST'])
+@app.route('/api/query', methods=['POST'])
 def query():
     data = request.json
-    prompt = data['prompt']
-    domain_type = data['domainType']
+    query_text = data.get('query_text')
+    domain_type = data.get('domain_type', False)
     
-    start_time = time.time()
-    response_text = query_rag(prompt, domain_type)
-    time_taken = time.time() - start_time
+    response_generator = query_rag(query_text, domain_type)
+    response_text = ''.join(response_generator)
+
+    return jsonify({"response": response_text})
+
+@app.route('/api/stream-query')
+def stream_query():
+    query_text = request.args.get('query_text')
+    domain_type = request.args.get('domain_type', 'false').lower() == 'true'
     
-    return jsonify({
-        'response_text': response_text,
-        'time_taken': time_taken
-    })
+    def generate():
+        response_generator = query_rag(query_text, domain_type)
+        for chunk in response_generator:
+            yield f"data: {chunk}\n\n"
+        yield "data: [DONE]\n\n"  # Ensure the final done signal is sent
+
+    return Response(generate(), mimetype='text/event-stream')
 
 if __name__ == '__main__':
     app.run(debug=True)
