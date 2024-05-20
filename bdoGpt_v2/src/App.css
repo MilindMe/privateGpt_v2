@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.App {
+  text-align: center;
+  margin: 20px;
+}
+
+button {
+  margin: 10px;
+}
+
+.chat {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.message {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.message.user {
+  background-color: #e1f5fe;
+}
+
+.message.assistant {
+  background-color: #fff3e0;
+}
+
+
+form {
+  margin-top: 20px;
+}
+
+input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+}
+
+/* src/App.css */
+.chatbox-form {
+  display: flex;
+  align-items: center;
+}
+
+.send-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.message {
+  margin: 10px 0;
+}
+
+.message.user {
+  text-align: left;
+}
+
+.message.assistant {
+  text-align: right;
+}
+
+.sidebar-tooltip {
+  position: absolute;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  z-index: 1;
+  bottom: 125%; /* Position the tooltip above the text */
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.group:hover .sidebar-tooltip {
+  opacity: 1;
+}
