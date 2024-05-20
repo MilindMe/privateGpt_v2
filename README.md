@@ -49,6 +49,11 @@ Once the virtual environment is set-up, we can install dependencies :
 pip install -r requirements.txt
 ```
 
+### Setting up the API Server 
+Install LMStudio 
+Download the Lllma3 Model
+Click on Start Server 
+
 ## Launching
 You can ensure dependencies have been installed by running
 ```python
@@ -64,3 +69,4 @@ and Run the application
 ```
 python -m streamlit run .\streamlit_ui.py
 ```
+
