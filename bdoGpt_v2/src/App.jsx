@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 import Layout from "./layouts/layout";
 import ChatComponent from "./components/chatComponent";
-
+import Greetings from "./components/greetings";
+import UploadButton from "./components/uploadButton";
 function App() {
   const [domainType, setDomainType] = useState(false);
 
@@ -10,8 +11,14 @@ function App() {
     setDomainType(!domainType);
   };
 
+
   return (
+  
     <Layout>
+      <div className = "greetings w-full flex items-center justify-center ml-auto mr-auto">
+      <Greetings/>
+      </div>
+      
       <div className="App">
         <h1>BdoGPT_debug</h1>
         <button onClick={toggleDomainType}>
@@ -20,6 +27,7 @@ function App() {
         <ChatComponent domainType={domainType} />
       </div>
     </Layout>
+   
     
   );
 }
