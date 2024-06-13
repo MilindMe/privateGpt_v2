@@ -37,7 +37,7 @@ In order to run our LLM model locally, we need to download LMStudio. Head to htt
 In LMStudio, click on Search and download the 'SanctumAI/Meta-Llama-3-8B-Instruct-GGUF' model
 ![alt text](image.png)
 
-Once downloaded, click on Local Server and load the model. We can start the server once we have configured the rest of our python environment.
+Once downloaded, click on Local Server (double arrow icon) and load the model (top middle). We can start the server once we have configured the rest of our python environment.
 
 ## Python Dependencies
 To avoid Conflicting dependencies, we will first set up a virtual environment. The following command sets up a virtual environment called bdoGpt, and activates it:
