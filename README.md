@@ -31,6 +31,12 @@ Clone the Repository or Download the .ZIP file at : https://github.com/MilindMe/
 ```
 git clone https://github.com/MilindMe/privateGPT_v2.git
 ```
+NOTE!: In the Backend folder, make a folder called 'data' and add PDFs to this folder before running the populate database script.
+
+```
+python ./populate_database.py
+```
+
 ## Installing LM Studio
 In order to run our LLM model locally, we need to download LMStudio. Head to https://lmstudio.ai/ to Download.
 
