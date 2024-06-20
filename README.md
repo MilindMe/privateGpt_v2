@@ -31,6 +31,12 @@ Clone the Repository or Download the .ZIP file at : https://github.com/MilindMe/
 ```
 git clone https://github.com/MilindMe/privateGPT_v2.git
 ```
+Install all dependencies (reccomended to do this in a virtual environment) 
+
+```
+pip install -r requirements.txt
+```
+
 NOTE!: In the Backend folder, make a folder called 'data' and add PDFs to this folder before running the populate database script.
 
 ```
