@@ -47,7 +47,7 @@ python ./populate_database.py
 In order to run our LLM model locally, we need to download LMStudio. Head to https://lmstudio.ai/ to Download.
 
 In LMStudio, click on Search and download the 'SanctumAI/Meta-Llama-3-8B-Instruct-GGUF' model
-![alt text](image.png)
+
 
 Once downloaded, click on Local Server (double arrow icon) and load the model (top middle). We can start the server once we have configured the rest of our python environment.
 
