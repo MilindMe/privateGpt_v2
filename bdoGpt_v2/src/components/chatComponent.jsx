@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Chatbox from './chatbox';
 
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
 
 // ChatComponent consumes DomainType for PDF-Mode
 // ChatComponent is responsible for Response Generation and Displaying
 // all responses and prompts 
 //
-const ChatComponent = ({ domainType }) => {
+const ChatComponent = ({ domainType, setShowGreetings }) => {
     const [messages, setMessages] = useState([]);
     const [prompt, setPrompt] = useState('');
     const [streamedMessage, setStreamedMessage] = useState('');
@@ -18,6 +21,12 @@ const ChatComponent = ({ domainType }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        {/* TOGGLES VISIBILITY OF GREETINGS WHEN FIRST PROMPT IS SENT */}
+        
+        if (messages.length === 0){
+            setShowGreetings(false);
+        }
+
         const newMessage = { role: 'user', content:prompt };
         setMessages((prevMessages) => [...prevMessages, newMessage]);
         setStreamedMessage('');
@@ -40,7 +49,7 @@ const ChatComponent = ({ domainType }) => {
                 const data = event.data.trim();
                 if (data !== "[DONE]") {    
                     console.log("Received chunk:", data);
-
+                    // 
                     // This error correction feature is very bad but it works.
                     // The first two chunks received on API calls are extraneous text containing
                     // 'assistant' and '<|end_header_id|> which we do not want displayed
@@ -66,7 +75,7 @@ const ChatComponent = ({ domainType }) => {
                     console.log("Final message to be added:", fullMessage.trim());
                     setIsStreaming(false);
                     setMessages((prevMessages) => [
-                        ...prevMessages,
+                        ...prevMessages,    
                         { role: 'BeeDo', content: fullMessage.trim() }
                     ]);
                     setStreamedMessage('');
@@ -105,56 +114,57 @@ const ChatComponent = ({ domainType }) => {
 
     return (
         //
-        // ***** TO DO NOTE ********
+        // ***** TODO NOTE ********
         // add conditional class to <strong> message.role </strong> 
         // change beedo to icon -- conditional depending on role
         // user logo if role == user
         // *************************
         // 
         //
-        // ****** TO DO NOTE *****
+        // ****** TODO NOTE *****
         // 
         // REARRANGE GENERATION PROMPTS POSITION SIZE AND COLOUR
         // ALIGN USER BOX MESSAGE TO THE RIGHT
         // ALIGN AI BOX MESSAGE TO THE LEFT
         //  
-
         <div>
-            <div>
-                {messages.map((message, index) => (
-                   // USER PROMPT BOX APPEARS
-                    <div key={index} className={`message ${message.role} 
-                    ${message.role === 'user' ? 'bg-gray-700' : 'bg-gray-700'} 
-                    text-white text-left
-                    font-roboto
-                    mx-auto w-3/5`}>
-                        
-                        <div className="userPrompt flex">
-                        <div class="relative w-10 h-10 overflow-hidden
-                         bg-gray-100 rounded-full dark:bg-gray-600">
-                            {renderIcon(message.role)}
-                        </div>
-                        <div className="userPrompt-content flex-col pl-4 mt-2 mb-3">
-                       {message.content}
-                       </div>
-                       </div>
-                </div>
-                ))}
-                {isStreaming && (
-
-                    <div className="message assistant bg-gray-700
-                    text-white text-left mx-auto w-3/5 ">
-                    {streamedMessage.trim()}
+    <div>
+        {messages.map((message, index) => (
+            // USER PROMPT BOX APPEARS
+            <div 
+                key={index} 
+                className={`message ${message.role} 
+                ${message.role === 'user' ? 'bg-gray-700 text-right' : 'bg-gray-800 text-left rounded-xl'} 
+                text-white font-roboto mx-auto w-3/5`}
+            >
+                <div className="userPrompt flex">
+                    <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                        {renderIcon(message.role)}
                     </div>
-
-                )}
-            </div>
-
-                <div className="fixed  w-full bottom-4 ">
-                <Chatbox prompt={prompt} setPrompt={setPrompt} handleSubmit={handleSubmit} />
+                    <div className="userPrompt-content flex-col pl-4 mt-2 mb-3">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {message.content}
+                        </ReactMarkdown>
+                    </div>
                 </div>
-    
-        </div>
+            </div>
+        ))}
+
+        {isStreaming && (
+            <div className=" message assistant bg-gray-700 text-white text-left mx-auto w-3/5">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {streamedMessage.trim()}
+                </ReactMarkdown>
+            </div>
+        )}
+    </div>
+
+    <div className="fixed bottom-0 left-0 w-full p-4">
+        <Chatbox prompt={prompt} setPrompt={setPrompt} handleSubmit={handleSubmit} />
+    </div>
+</div>
+
+       
     );
 };
 

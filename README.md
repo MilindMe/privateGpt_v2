@@ -25,7 +25,9 @@ Make a new folder
 mkdir bdo-gpt
 cd bdo-gpt
 ```
+
 Clone the Repository or Download the .ZIP file at : https://github.com/MilindMe/privateGPT_v2.git
+
 ```
 git clone https://github.com/MilindMe/privateGPT_v2.git
 ```
@@ -76,3 +78,4 @@ In another terminal window, run
 npm run dev
 ```
 
+    

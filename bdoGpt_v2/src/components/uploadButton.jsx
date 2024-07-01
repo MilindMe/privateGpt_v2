@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiLock } from 'react-icons/fi';
 
-const TARGET_TEXT = "Index PDFs";
+const TARGET_TEXT = "Upload";
 const CYCLES_PER_LETTER = 2;
 const SHUFFLE_TIME = 50;
 const CHARS = "!@#$%^&*():{};|,.<>/?";

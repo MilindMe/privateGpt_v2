@@ -2,7 +2,7 @@ import React from 'react'
 import PremadePrompt from './premadePrompt'
 
 
-const Greetings = () => {
+const Greetings = ({ showPrompts }) => {
   return (
 
 
@@ -21,24 +21,35 @@ const Greetings = () => {
 
   </div>
 
-{/*
-<div className="promptContainer flex row-span-3">
+
+{showPrompts && (
+<div className="promptContainer flex row-span-3 gap-2">
 
     <div className="prompts col-span-1 ">
-    `<PremadePrompt prompt="Define Something in the context of Something"/>`
+    `<PremadePrompt
+    link="https://drive.google.com/file/d/1dHR2nspx1Vu_N3IWVSuWAB3w0xrDA5zj/view?usp=sharing" 
+    imagePath="/page1.png" 
+    prompt="Doc1"
+    details="FSC Handbook"/>
     </div>
 
     <div className="prompts col-span-1">
-    `<PremadePrompt prompt="Define Something in the context of Something"/>`
+    `<PremadePrompt 
+    link="https://www.bdo.mu/en-gb/services/bdo-co/statutory-audit"
+    imagePath="/page3.png"
+    prompt="Doc2" 
+    details="BDO IFRS Standards"/>`
     </div>
 
     <div className="prompts col-span-1">
-    `<PremadePrompt prompt="Define Something in the context of Something"/>`
+    `<PremadePrompt
+    link="https://www.scribd.com/document/37771858/Internships-for-Dummies"
+    imagePath="/page2.png"
+    prompt="Doc3" details="Promoting Interns for Dummies"/>`
     </div>
 
   </div>
-  */}
-  
+)}
 </div>
 
     
