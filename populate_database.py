@@ -1,16 +1,21 @@
 import argparse
 import os
 import shutil
+
 from langchain.document_loaders.pdf import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
 from get_embedding_function import get_embedding_function
 from langchain.vectorstores.chroma import Chroma
+
 from gpt4all import Embed4All
+
+
 ## TESTING ===========================================
 import time
 start_time = time.time()
 ## ===================================================
+
 
 CHROMA_PATH = "chroma"
 DATA_PATH = "data"
@@ -89,11 +94,10 @@ def add_to_chroma(chunks: list[Document]):
         print("✅ No new documents to add")
 
 
-
 # calculate_chunk_ids() produces a Chunk_Id in the following format
     # "data/monopoly.pdf:6:2"
     # Page Source : Page Number : Chunk Index
-# Effects : Produces Output 
+# Effects : Produces Output
 # Requires : valid Chunk type   
 def calculate_chunk_ids(chunks):
 

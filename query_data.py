@@ -1,18 +1,13 @@
 import argparse
+
 from langchain.vectorstores.chroma import Chroma
 from langchain.prompts import ChatPromptTemplate
-from langchain_community.llms.ollama import Ollama
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
-from openai import OpenAI
+
 import requests
 import json
-
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain_community.llms import GPT4All
-
 from get_embedding_function import get_embedding_function
-
-
 import time
 
 start_time = time.time()
@@ -26,8 +21,6 @@ Answer the question based only on the following context:
 
 ---
 
-Answer the question based on the above context. Keep answer concise. If none of the information is relevant to the 
-question, simply say you are not configured to answer general questions like this.
 Question : 
 {question}
 """
@@ -56,7 +49,9 @@ def query_rag(query_text: str, domainType:bool):
 
     # SIMILARITY SEARCH WITH SCORE
     # Search the DB.
-    results = db.similarity_search_with_score(query_text, k=4)
+    results = db.similarity_search_with_score(query_text, k=7)
+    sources = [doc.metadata.get("id", None) for doc, _score in results]
+
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
     
@@ -70,6 +65,11 @@ def query_rag(query_text: str, domainType:bool):
         prompt = prompt_template.format(question=query_text)
     
     # DEBUGGING
+    print(sources)
+    print ("SOURCE HERE ^^^^^^")
+    page_numbers = [source.split(':')[1] for source in sources]
+
+    print(page_numbers)
     print(prompt)
     print(domainType)
 
@@ -78,15 +78,17 @@ def query_rag(query_text: str, domainType:bool):
     api_url = "http://localhost:1234/v1/completions"
     payload = {
         "model": "SanctumAI/Meta-Llama-3-8B-Instruct-GGUF",
-        "prompt": prompt,
-        "max_tokens": 150,
-        "temperature": 0.7,
+        "max_tokens": 1000,
+        "prompt": prompt,   
+        "temperature": 0.8,
         "stream": True
         }
-    
+
+#===============================================================
+
+#===============================================================
     response = requests.post(api_url, json=payload, stream=True)
     collected_response = ""
-
     for line in response.iter_lines():
         if line:
             decoded_line = line.decode('utf-8')
@@ -94,18 +96,13 @@ def query_rag(query_text: str, domainType:bool):
                 data = decoded_line[6:]
                 if data.strip() != "[DONE]":
                     json_data = json.loads(data)
+                    print(json_data)  # Debug print to check the structure of the JSON response
                     if "choices" in json_data and json_data["choices"]:
-                        text = json_data["choices"][0]["text"].replace("assistant", "").strip()
-                        text = text.replace("<|end_header_id|>", "").strip()  # Remove unwanted text
-                        print(text)
+                        text = json_data["choices"][0]["text"]
                         collected_response += text + " "
-                        yield text
-
-    final_response = collected_response.strip()
-    yield final_response
-
-
-
+                        yield text.strip()
+                else:
+                    break
 
  #   final_response = collected_response.strip().replace("assistant", "").strip()
   #  yield final_response
@@ -114,8 +111,6 @@ def query_rag(query_text: str, domainType:bool):
    # response_json=response.json()
     #response_text=response.json()["choices"][0]["text"].strip()
     
-
-
 #==================================
     #TEMPORARY LLM MODEL
    
