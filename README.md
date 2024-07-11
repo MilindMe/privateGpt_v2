@@ -4,6 +4,7 @@
 1. [Installing Python](#python)
 2. [Clone Repo](#repo)
 2. [Installing LMStudio](#llm)
+2. [Installing LMStudio](#llm)
 3. [Python Dependencies](#pip)
 4. [Launching](#running)
 
@@ -31,13 +32,25 @@ Clone the Repository or Download the .ZIP file at : https://github.com/MilindMe/
 ```
 git clone https://github.com/MilindMe/privateGPT_v2.git
 ```
+Install all dependencies (reccomended to do this in a virtual environment) 
+
+```
+pip install -r requirements.txt
+```
+
+NOTE!: In the Backend folder, make a folder called 'data' and add PDFs to this folder before running the populate database script.
+
+```
+python ./populate_database.py
+```
+
 ## Installing LM Studio
 In order to run our LLM model locally, we need to download LMStudio. Head to https://lmstudio.ai/ to Download.
 
 In LMStudio, click on Search and download the 'SanctumAI/Meta-Llama-3-8B-Instruct-GGUF' model
-![alt text](image.png)
 
-Once downloaded, click on Local Server and load the model. We can start the server once we have configured the rest of our python environment.
+
+Once downloaded, click on Local Server (double arrow icon) and load the model (top middle). We can start the server once we have configured the rest of our python environment.
 
 ## Python Dependencies
 To avoid Conflicting dependencies, we will first set up a virtual environment. The following command sets up a virtual environment called bdoGpt, and activates it:

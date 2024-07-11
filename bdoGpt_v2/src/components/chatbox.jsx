@@ -10,7 +10,7 @@ const Chatbox = ({prompt, setPrompt, handleSubmit }) => {
      <div className ="flex-col">
 
         <input
-          className="mt-1 mb-1 w-2/5 h-12 rounded-3xl
+          className="mt-1 mb-1 w-1/2 h-12 rounded-3xl
 
           bg-gray-900 text-sm text-white border-0
           

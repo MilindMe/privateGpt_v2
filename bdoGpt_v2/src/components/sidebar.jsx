@@ -4,6 +4,8 @@ import { BsDashCircle } from "react-icons/bs"
 import UploadButton from './uploadButton'
 import FileUpload from '../logic/FileUpload';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 
 // UPLOAD PDF MODAL COMPONENT SIDEBAR 
@@ -79,10 +81,19 @@ const Modal = ({ showModal, setShowModal }) => {
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleRefresh = () => {
     window.location.reload();
   }
+
+  const navigateToSettings = () => {
+    navigate('/settings'); // Navigate to settings page
+  };
+
+  const navigateToNewChat = () => {
+    navigate('/home'); // Navigate to home page
+  };
 
   return (
     <div className="flex">
@@ -94,7 +105,7 @@ const Sidebar = () => {
               <span className="sidebar-tooltip group-hover:scale-100">Expand Menu</span>
             </button>
 
-            <button onClick={handleRefresh}>
+            <button onClick={navigateToNewChat}>
             <SideBarIcon icon={<FaPlus size="15" />} text={expanded ? 'New Chat' : 'New Chat'} />
             </button> 
 
@@ -105,16 +116,22 @@ const Sidebar = () => {
             <a href="http://localhost:8503/">
             <SideBarIcon icon={<FaFire size="15" />} text={expanded ? 'pls promote ur interns' : 'pls promote ur interns'} />
             </a>
+
+
+            <button onClick={navigateToSettings} className="sidebar-icon group">
+              <FaCog size="15" />
+              <span className="sidebar-tooltip group-hover:scale-100">{expanded ? 'Settings' : 'Settings'}</span>
+            </button>
           </div>
         </div>
 
         {/* Settings Icon */}
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <button onClick={() => setShowModal(true)} className="sidebar-icon group">
             <FaCog size="15" />
             <span className="sidebar-tooltip group-hover:scale-100">{expanded ? 'Settings' : 'Settings'}</span>
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Modal */}

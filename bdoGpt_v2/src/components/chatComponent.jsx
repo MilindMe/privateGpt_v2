@@ -3,7 +3,7 @@ import Chatbox from './chatbox';
 
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-
+import rehypeRaw from 'rehype-raw';
 
 // ChatComponent consumes DomainType for PDF-Mode
 // ChatComponent is responsible for Response Generation and Displaying
@@ -142,7 +142,7 @@ const ChatComponent = ({ domainType, setShowGreetings }) => {
                         {renderIcon(message.role)}
                     </div>
                     <div className="userPrompt-content flex-col pl-4 mt-2 mb-3">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]}>
                         {message.content}
                         </ReactMarkdown>
                     </div>
@@ -152,7 +152,7 @@ const ChatComponent = ({ domainType, setShowGreetings }) => {
 
         {isStreaming && (
             <div className=" message assistant bg-gray-700 text-white text-left mx-auto w-3/5">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                 <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]}>
                 {streamedMessage.trim()}
                 </ReactMarkdown>
             </div>
